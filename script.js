@@ -624,3 +624,4 @@ updateSavedLayoutCount();
 renderEmptyState();
 updateCounts();
 updatePanelMetadata();
+window.toggleTheme = toggleTheme;
