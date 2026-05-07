@@ -1,47 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MultiplyYt</title>
-  <link rel="stylesheet" href="styles.css">
+
+  <section id="aboutBox" class="about-multiyt">
+  <button id="closeAboutBtn" class="about-close-btn" aria-label="Close About MultiplyYt">
+    ×
+  </button>
+
+  <h2>About MultiplyYt</h2>
+  <p>
+    MultiplyYt is a browser-based tool that allows users to watch and control multiple
+    YouTube videos simultaneously in a single dashboard. Users can add YouTube links,
+    synchronize playback, save layouts, and manage multiple videos for studying,
+    comparison, or entertainment.
+  </p>
+
+  <p>
+    MultiplyYt is free to use. Optional tips help support continued development and
+    future improvements to the platform.
+  </p>
+</section>
+
+<div id="showAboutWrap" class="show-about-wrap hidden">
+  <button id="showAboutBtn" class="show-about-btn">
+    Show About MultiplyYt
+  </button>
+</div>
+
+  <link rel="stylesheet" href="styles.css" />
 </head>
 
-<body data-theme="dark">
+<body 
+
+   data-theme="dark">
   <div class="app">
-    <section id="aboutBox" class="about-multiyt">
-      <button id="closeAboutBtn" class="about-close-btn" aria-label="Close About MultiplyYt">
-        ×
-      </button>
-
-      <h2>About MultiplyYt</h2>
-      <p>
-        MultiplyYt is a browser-based tool that allows users to watch and control multiple
-        YouTube videos simultaneously in a single dashboard. Users can add YouTube links,
-        synchronize playback, save layouts, and manage multiple videos for studying,
-        comparison, or entertainment.
-      </p>
-    </section>
-
-    <div id="showAboutWrap" class="show-about-wrap hidden">
-      <button id="showAboutBtn" class="show-about-btn">
-        Show About MultiplyYt
-      </button>
-    </div>
-
     <section class="hero">
       <div class="card hero-main">
-        <h1>MultiYt</h1>
+        <div class="hero-brand-row">
+          <div class="hero-title-group">
+            <h1>MultiYt</h1>
+            <img
+              src="MultiYtImages/logo2.png"
+              alt="YouTube logo"
+              class="inline-youtube-logo"
+            >
+          </div>
+
+          <img
+            src="MultiYtImages/logo.png"
+            alt="MultiplyYt logo"
+            class="feature-logo"
+          >
+        </div>
+
         <p class="subtitle">
           Drop in multiple YouTube links and let them play at the same time in one clean dashboard!
         </p>
 
-        <div class="drop-zone"
-              id="dropZone"
-              tabindex="0"
-              role="button"
-              aria-label="Drop YouTube links here or click to paste one manually">
-
+        <div
+          class="drop-zone"
+          id="dropZone"
+          tabindex="0"
+          aria-label="Drop YouTube links here or click to paste one manually"
+        >
           <div class="drop-inner">
             <div class="drop-title">Drag your YouTube link in here</div>
             <p class="drop-text">
@@ -57,7 +81,7 @@
             type="text"
             placeholder="Paste a YouTube URL here"
             autocomplete="off"
-          >
+          />
           <button class="btn btn-primary" id="addVideoBtn">Click here to add</button>
         </div>
       </div>
@@ -88,23 +112,31 @@
 
         <p class="hint">
           Global mute: Toggle this to mute all vids playing!<br>
-          Play All: Toggle this to Play all vids!<br>
-          Pause all: Toggle this to Pause all vids!<br>
-          Sync starting time: Toggle this to Start all vids at the same time!<br>
-          Save Layout: Toggle this to save current build!<br>
-          Load Layout: Toggle this to load that build!<br>
-          Dark/light mode: Switch between dark and light themes.
+          Play All: Toggle this to Play all vids! <br>
+          Pause all: Toggle this to Pause all vids! <br>
+          Sync starting time: Toggle this to Start all vids at the same time! <br> 
+          Save Layout: Toggle this to save current build! <br>
+          Load Layout: Toggle this to load that build! <br>
+          Dark/light mode: Do I really gotta explain.....XD
         </p>
       </aside>
     </section>
 
     <section class="card grid-card">
       <div class="topbar">
-        <div>
-          <h2>Live multi-video grid</h2>
-          <p class="footer-note">
-            Add, remove, save, reload, and control multiple YouTube videos without leaving the page.
-          </p>
+        <div class="section-title-wrap">
+          <div>
+            <h2>Live multi-video grid</h2>
+            <p class="footer-note">
+              Add, remove, save, reload, and control multiple YouTube videos without leaving the page.
+            </p>
+          </div>
+
+          <img
+            src="MultiYtImages/logo.png"
+            alt="MultiplyYt logo"
+            class="section-logo"
+          >
         </div>
 
         <div class="toolbar-actions">
@@ -126,27 +158,31 @@
 
         <label class="volume-wrap" for="globalVolume">
           <span>Global volume</span>
-          <input id="globalVolume" type="range" min="0" max="100" value="50">
+          <input id="globalVolume" type="range" min="0" max="100" value="50" />
           <span id="globalVolumeLabel">50%</span>
         </label>
       </div>
 
       <div id="videoGrid" class="video-grid" aria-live="polite"></div>
-    </section>
+
+      </section>
   </div>
-
-  <footer class="site-footer">
-    <p>© 2026 MultiplyYt</p>
-
-    <div class="footer-links">
-      <a href="contact.html">Contact</a>
-      <a href="copyright.html">Copyright claims</a>
-      <a href="privacy.html">Privacy Policy</a>
-      <a href="terms.html">Terms of Use</a>
-    </div>
-  </footer>
 
   <script src="https://www.youtube.com/iframe_api"></script>
   <script src="script.js"></script>
+
+  
+
+  <footer class="site-footer">
+  <p>© 2026 MultiplyYt</p>
+
+  <div class="footer-links">
+    <a href="contact.html">Contact</a>
+    <a href="copyright.html">Copyright claims</a>
+    <a href="privacy.html">Privacy Policy</a>
+    <a href="terms.html">Terms of Use</a>
+  </div>
+</footer>
+
 </body>
 </html>
