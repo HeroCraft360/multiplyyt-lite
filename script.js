@@ -90,12 +90,12 @@ function getPanelElement(id) {
 }
 
 function updateCounts() {
-  videoCount.textContent = `${videos.length} / ${MAX_VIDEOS}`;
+  if (videoCount) videoCount.textContent = `${videos.length} / ${MAX_VIDEOS}`;
   updateSavedLayoutCount();
 }
 
 function renderEmptyState() {
-  if (videos.length > 0) return;
+  if (!videoGrid || videos.length > 0) return;
 
   videoGrid.innerHTML = `
     <div class="empty-state" id="emptyState">
@@ -113,6 +113,8 @@ function removeEmptyStateIfNeeded() {
 }
 
 function updatePanelMetadata() {
+  if (!videoGrid) return;
+
   const panels = Array.from(videoGrid.querySelectorAll("[data-panel-id]"));
 
   panels.forEach((panel, index) => {
@@ -157,7 +159,7 @@ function updatePanelMetadata() {
 }
 
 function createPlayerForVideo(video) {
-  if (!youtubeApiReady) return;
+  if (!youtubeApiReady || typeof YT === "undefined") return;
   if (players[video.id]) return;
 
   players[video.id] = new YT.Player(`player-${video.id}`, {
@@ -408,7 +410,7 @@ function unmuteAllVideos() {
 
 function setGlobalVolume(value) {
   globalState.volume = Number(value);
-  globalVolumeLabel.textContent = `${globalState.volume}%`;
+  if (globalVolumeLabel) globalVolumeLabel.textContent = `${globalState.volume}%`;
 
   Object.values(players).forEach((player) => {
     if (player?.setVolume) player.setVolume(globalState.volume);
@@ -486,14 +488,14 @@ function clearSavedLayout() {
 }
 
 function updateSavedLayoutCount() {
-  savedLayoutCount.textContent = localStorage.getItem(STORAGE_KEY) ? "1" : "0";
+  if (savedLayoutCount) savedLayoutCount.textContent = localStorage.getItem(STORAGE_KEY) ? "1" : "0";
 }
 
 function applyTheme(theme) {
   const safeTheme = theme === "light" ? "light" : "dark";
   document.body.setAttribute("data-theme", safeTheme);
   localStorage.setItem(THEME_KEY, safeTheme);
-  themeLabel.textContent = safeTheme.charAt(0).toUpperCase() + safeTheme.slice(1);
+  if (themeLabel) themeLabel.textContent = safeTheme.charAt(0).toUpperCase() + safeTheme.slice(1);
 }
 
 function toggleTheme() {
@@ -510,62 +512,72 @@ function handleSubmit() {
   addVideo(youtubeInput.value);
 }
 
-addVideoBtn.addEventListener("click", handleSubmit);
+window.toggleTheme = toggleTheme;
 
-youtubeInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    handleSubmit();
-  }
-});
+if (addVideoBtn && youtubeInput) {
+  addVideoBtn.addEventListener("click", handleSubmit);
 
-clearAllBtn.addEventListener("click", clearAllVideos);
+  youtubeInput.addEventListener("keydown", (event) => {
+    if (event.key === "Enter") {
+      handleSubmit();
+    }
+  });
+}
 
-addSampleBtn.addEventListener("click", () => {
-  addVideo("https://www.youtube.com/watch?v=jNQXAC9IVRw");
-});
+if (clearAllBtn) clearAllBtn.addEventListener("click", clearAllVideos);
 
-playAllBtn.addEventListener("click", playAllVideos);
-pauseAllBtn.addEventListener("click", pauseAllVideos);
-muteAllBtn.addEventListener("click", muteAllVideos);
-unmuteAllBtn.addEventListener("click", unmuteAllVideos);
+if (addSampleBtn) {
+  addSampleBtn.addEventListener("click", () => {
+    addVideo("https://www.youtube.com/watch?v=jNQXAC9IVRw");
+  });
+}
 
-globalVolume.addEventListener("input", (event) => {
-  setGlobalVolume(event.target.value);
-});
+if (playAllBtn) playAllBtn.addEventListener("click", playAllVideos);
+if (pauseAllBtn) pauseAllBtn.addEventListener("click", pauseAllVideos);
+if (muteAllBtn) muteAllBtn.addEventListener("click", muteAllVideos);
+if (unmuteAllBtn) unmuteAllBtn.addEventListener("click", unmuteAllVideos);
 
-saveLayoutBtn.addEventListener("click", saveLayout);
-loadLayoutBtn.addEventListener("click", loadLayout);
-clearSavedBtn.addEventListener("click", clearSavedLayout);
-syncStartBtn.addEventListener("click", syncStartTime);
-themeToggleBtn.addEventListener("click", toggleTheme);
+if (globalVolume) {
+  globalVolume.addEventListener("input", (event) => {
+    setGlobalVolume(event.target.value);
+  });
+}
 
-dropZone.addEventListener("dragover", (event) => {
-  event.preventDefault();
-  dropZone.classList.add("dragover");
-});
+if (saveLayoutBtn) saveLayoutBtn.addEventListener("click", saveLayout);
+if (loadLayoutBtn) loadLayoutBtn.addEventListener("click", loadLayout);
+if (clearSavedBtn) clearSavedBtn.addEventListener("click", clearSavedLayout);
+if (syncStartBtn) syncStartBtn.addEventListener("click", syncStartTime);
+if (themeToggleBtn) themeToggleBtn.addEventListener("click", toggleTheme);
 
-dropZone.addEventListener("dragleave", () => {
-  dropZone.classList.remove("dragover");
-});
-
-dropZone.addEventListener("drop", (event) => {
-  event.preventDefault();
-  dropZone.classList.remove("dragover");
-
-  const droppedText = event.dataTransfer.getData("text");
-  if (droppedText) addVideo(droppedText);
-});
-
-dropZone.addEventListener("click", () => {
-  youtubeInput.focus();
-});
-
-dropZone.addEventListener("keydown", (event) => {
-  if (event.key === "Enter" || event.key === " ") {
+if (dropZone && youtubeInput) {
+  dropZone.addEventListener("dragover", (event) => {
     event.preventDefault();
+    dropZone.classList.add("dragover");
+  });
+
+  dropZone.addEventListener("dragleave", () => {
+    dropZone.classList.remove("dragover");
+  });
+
+  dropZone.addEventListener("drop", (event) => {
+    event.preventDefault();
+    dropZone.classList.remove("dragover");
+
+    const droppedText = event.dataTransfer.getData("text");
+    if (droppedText) addVideo(droppedText);
+  });
+
+  dropZone.addEventListener("click", () => {
     youtubeInput.focus();
-  }
-});
+  });
+
+  dropZone.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      youtubeInput.focus();
+    }
+  });
+}
 
 window.onYouTubeIframeAPIReady = function () {
   youtubeApiReady = true;
@@ -619,7 +631,9 @@ if (aboutBox && closeAboutBtn && showAboutWrap && showAboutBtn) {
 }
 
 loadTheme();
-setGlobalVolume(globalVolume.value);
+
+if (globalVolume) setGlobalVolume(globalVolume.value);
+
 updateSavedLayoutCount();
 renderEmptyState();
 updateCounts();
