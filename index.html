@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>MultiplyYt Lite</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MultiplyYt</title>
 
-</head>
-<body>
-  <h1>MultiplyYt Lite</h1>
-  <p>This is MultiYt. My multiple youtube watching app.</p>
+  <section id="aboutBox" class="about-multiyt">
+  <button id="closeAboutBtn" class="about-close-btn" aria-label="Close About MultiplyYt">
+    ×
+  </button>
 
-   <h2>About MultiplyYt</h2>
+  <h2>About MultiplyYt</h2>
   <p>
     MultiplyYt is a browser-based tool that allows users to watch and control multiple
     YouTube videos simultaneously in a single dashboard. Users can add YouTube links,
@@ -17,16 +18,138 @@
     comparison, or entertainment.
   </p>
 
-  <p>
-    MultiplyYt is free to use. Optional tips help support continued development and
-    future improvements to the platform.
-  </p>
+</section>
+
+<div id="showAboutWrap" class="show-about-wrap hidden">
+  <button id="showAboutBtn" class="show-about-btn">
+    Show About MultiplyYt
+  </button>
+</div>
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body 
+
+   data-theme="dark">
+  <div class="app">
+    <section class="hero">
+      <div class="card hero-main">
+        <h1>MultiYt</h1>
+        <p class="subtitle">
+          Drop in multiple YouTube links and let them play at the same time in one clean dashboard!
+        </p>
+
+        <div
+          class="drop-zone"
+          id="dropZone"
+          tabindex="0"
+          aria-label="Drop YouTube links here or click to paste one manually"
+        >
+          <div class="drop-inner">
+            <div class="drop-title">Drag your YouTube link in here</div>
+            <p class="drop-text">
+              You can drag text links into this area, paste them, or use the input below to add one or more YouTube videos.
+            </p>
+          </div>
+        </div>
+
+        <div class="manual-entry">
+          <label class="sr-only" for="youtubeInput">YouTube URL</label>
+          <input
+            id="youtubeInput"
+            type="text"
+            placeholder="Paste a YouTube URL here"
+            autocomplete="off"
+          />
+          <button class="btn btn-primary" id="addVideoBtn">Click here to add</button>
+        </div>
+      </div>
+
+      <aside class="card hero-side">
+        <div class="stat-grid">
+          <div class="stat">
+            <div class="stat-label">Loaded videos</div>
+            <div class="stat-value" id="videoCount">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Loop mode</div>
+            <div class="stat-value">On</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Saved layouts</div>
+            <div class="stat-value" id="savedLayoutCount">0</div>
+          </div>
+          <div class="stat">
+            <div class="stat-label">Theme</div>
+            <div class="stat-value" id="themeLabel">Dark</div>
+          </div>
+        </div>
+
+        <p class="hint">
+          Every panel keeps its original linked video intact and uses YouTube embed parameters designed to loop the same video.
+        </p>
+
+        <p class="hint">
+          Global mute: Toggle this to mute all vids playing!<br>
+          Play All: Toggle this to Play all vids! <br>
+          Pause all: Toggle this to Pause all vids! <br>
+          Sync starting time: Toggle this to Start all vids at the same time! <br> 
+          Save Layout: Toggle this to save current build! <br>
+          Load Layout: Toggle this to load that build! <br>
+          Dark/light mode: Toggle this to switch between dark and light themes! <br>
+        </p>
+      </aside>
+    </section>
+
+    <section class="card grid-card">
+      <div class="topbar">
+        <div>
+          <h2>Live multi-video grid</h2>
+          <p class="footer-note">
+            Add, remove, save, reload, and control multiple YouTube videos without leaving the page.
+          </p>
+        </div>
+
+        <div class="toolbar-actions">
+          <button class="btn btn-secondary" id="themeToggleBtn">Toggle theme</button>
+          <button class="btn btn-secondary" id="addSampleBtn">Add sample</button>
+          <button class="btn btn-secondary" id="syncStartBtn">Sync start time</button>
+          <button class="btn btn-secondary" id="saveLayoutBtn">Save layout</button>
+          <button class="btn btn-secondary" id="loadLayoutBtn">Load layout</button>
+          <button class="btn btn-secondary" id="clearSavedBtn">Clear saved</button>
+          <button class="btn btn-danger" id="clearAllBtn">Clear all</button>
+        </div>
+      </div>
+
+      <div class="control-strip">
+        <button class="btn btn-primary" id="playAllBtn">Play all</button>
+        <button class="btn btn-secondary" id="pauseAllBtn">Pause all</button>
+        <button class="btn btn-secondary" id="muteAllBtn">Mute all</button>
+        <button class="btn btn-secondary" id="unmuteAllBtn">Unmute all</button>
+
+        <label class="volume-wrap" for="globalVolume">
+          <span>Global volume</span>
+          <input id="globalVolume" type="range" min="0" max="100" value="50" />
+          <span id="globalVolumeLabel">50%</span>
+        </label>
+      </div>
+
+      <div id="videoGrid" class="video-grid" aria-live="polite"></div>
+
+    </section>
+  </div>
+
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script src="script.js"></script>
 
 
   <footer class="site-footer">
   <p>© 2026 MultiplyYt</p>
 
   <div class="footer-links">
+    <a href="contact.html">Contact</a>
+    <a href="copyright.html">Copyright claims</a>
     <a href="privacy.html">Privacy Policy</a>
     <a href="terms.html">Terms of Use</a>
   </div>
